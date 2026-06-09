@@ -1,5 +1,24 @@
 import { ReforgerPayloadSchema } from "../schemas/reforger.js";
 import { saveReforgerEvents } from "../services/saveReforgerEvents.js";
+import { isAllowedReforgerIp, isAllowedReforgerServerId } from "../config/whitelist.js";
+function parseCsvEnv(value) {
+    return new Set((value ?? "")
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean));
+}
+function isAllowedServerId(serverId) {
+    const allowedServerIds = parseCsvEnv(process.env.ALLOWED_REFORGER_SERVER_IDS);
+    if (allowedServerIds.size === 0)
+        return true;
+    return allowedServerIds.has(serverId);
+}
+function isAllowedIp(ip) {
+    const allowedIps = parseCsvEnv(process.env.ALLOWED_REFORGER_IPS);
+    if (allowedIps.size === 0)
+        return true;
+    return allowedIps.has(ip);
+}
 export default async function reforgerRoutes(app) {
     app.post("/reforger/events", async (request, reply) => {
         const result = ReforgerPayloadSchema.safeParse(request.body);
@@ -13,6 +32,12 @@ export default async function reforgerRoutes(app) {
             return reply.status(401).send({
                 error: "Unauthorized",
             });
+        }
+        if (!isAllowedReforgerServerId(payload.serverId)) {
+            return reply.status(403).send({ error: "Forbidden serverId" });
+        }
+        if (!isAllowedReforgerIp(request.ip)) {
+            return reply.status(403).send({ error: "Forbidden IP" });
         }
         const inserted = await saveReforgerEvents(payload);
         return reply.send({
