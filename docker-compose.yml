@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: skmuser
+      POSTGRES_PASSWORD: skmpass
+      POSTGRES_DB: skm_stats_db
+    volumes:
+      - skm_stats_pgdata:/var/lib/postgresql/data
+    labels:
+      app: skm-ingest
+      role: database
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    ports:
+      - "5051:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.dev
+      PGADMIN_DEFAULT_PASSWORD: adminpass
+    volumes:
+      - skm_stats_pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+    labels:
+      app: skm-ingest
+      role: admin-ui
+
+volumes:
+  skm_stats_pgdata:
+  skm_stats_pgadmin_data:
