@@ -1,0 +1,16 @@
+import { prisma } from "../lib/prisma.js";
+
+export async function getReforgerSessionById(sessionId: string) {
+    return prisma.reforgerSession.findUnique({
+        where: {
+            sessionId,
+        },
+        include: {
+            events: {
+                orderBy: {
+                    eventTimestamp: "asc",
+                },
+            },
+        },
+    });
+}

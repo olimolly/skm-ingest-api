@@ -31,16 +31,14 @@ export default async function internalRoutes(app: FastifyInstance) {
         };
     });
 
-    app.get("/internal/sessions/:sessionId/events", async (request, reply) => {
+    app.get<{ Params: { sessionId: string } }>("/internal/sessions/:sessionId", async (request, reply) => {
         if (!isAuthorized(request.headers.authorization)) {
             return reply.status(401).send({ error: "Unauthorized" });
         }
 
-        const params = request.params as { sessionId: string };
-
         const session = await prisma.reforgerSession.findUnique({
             where: {
-                sessionId: params.sessionId,
+                sessionId: request.params.sessionId,
             },
             include: {
                 events: {
@@ -58,7 +56,6 @@ export default async function internalRoutes(app: FastifyInstance) {
         return {
             ok: true,
             session,
-            events: session.events,
         };
     });
 }
