@@ -5,7 +5,7 @@ import internalRoutes from "./routes/internal.js";
 
 export function buildApp() {
     const app = Fastify({
-        logger: false,
+        logger: process.env.NODE_ENV === "production",
         trustProxy: true,
     });
 
