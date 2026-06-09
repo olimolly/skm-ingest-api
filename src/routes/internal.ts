@@ -1,8 +1,14 @@
 import type { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma.js";
 
+const INTERNAL_API_KEY = process.env.INTERNAL_API_KEY;
+
+if (!INTERNAL_API_KEY) {
+    throw new Error("Missing INTERNAL_API_KEY");
+}
+
 function isAuthorized(authHeader: unknown) {
-    return authHeader === `Bearer ${process.env.INTERNAL_API_KEY}`;
+    return authHeader === `Bearer ${INTERNAL_API_KEY}`;
 }
 
 function parsePositiveInt(value: unknown, fallback: number) {
@@ -24,7 +30,7 @@ export default async function internalRoutes(app: FastifyInstance) {
 
         const page = parsePositiveInt(request.query.page, 1);
         const pageSize = Math.min(parsePositiveInt(request.query.pageSize, 12), 50);
-        const q = request.query.q?.trim();
+        const q = request.query.q?.trim().slice(0, 80);
 
         const where = q
             ? {
