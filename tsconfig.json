@@ -11,6 +11,7 @@
     "types": [
       "node"
     ],
+    "allowJs": true,
     "sourceMap": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
@@ -19,7 +20,9 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/generated/**/*.js",
+    "src/generated/**/*.d.ts"
   ],
   "exclude": [
     "node_modules",
