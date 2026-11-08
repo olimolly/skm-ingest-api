@@ -76,16 +76,63 @@ export default async function internalRoutes(app: FastifyInstance) {
         };
     });
 
+    app.get<{ Params: { serverId: string; sessionId: string } }>(
+        "/internal/servers/:serverId/sessions/:sessionId",
+        async (request, reply) => {
+            if (!isAuthorized(request.headers.authorization)) {
+                return reply.status(401).send({ error: "Unauthorized" });
+            }
+
+            const session = await prisma.reforgerSession.findUnique({
+                where: {
+                    serverId_sessionId: {
+                        serverId: request.params.serverId,
+                        sessionId: request.params.sessionId,
+                    },
+                },
+                include: {
+                    objectives: {
+                        orderBy: {
+                            taskId: "asc",
+                        },
+                    },
+                    events: {
+                        orderBy: {
+                            eventTimestamp: "asc",
+                        },
+                    },
+                },
+            });
+
+            if (!session) {
+                return reply.status(404).send({ error: "Session not found" });
+            }
+
+            return {
+                ok: true,
+                session,
+            };
+        }
+    );
+
+    // Backward-compatible lookup. A server-scoped URL is required as soon as
+    // two servers use the same sessionId.
     app.get<{ Params: { sessionId: string } }>("/internal/sessions/:sessionId", async (request, reply) => {
         if (!isAuthorized(request.headers.authorization)) {
             return reply.status(401).send({ error: "Unauthorized" });
         }
 
-        const session = await prisma.reforgerSession.findUnique({
+        const sessions = await prisma.reforgerSession.findMany({
             where: {
                 sessionId: request.params.sessionId,
             },
+            take: 2,
             include: {
+                objectives: {
+                    orderBy: {
+                        taskId: "asc",
+                    },
+                },
                 events: {
                     orderBy: {
                         eventTimestamp: "asc",
@@ -94,13 +141,20 @@ export default async function internalRoutes(app: FastifyInstance) {
             },
         });
 
-        if (!session) {
+        if (sessions.length === 0) {
             return reply.status(404).send({ error: "Session not found" });
+        }
+
+        if (sessions.length > 1) {
+            return reply.status(409).send({
+                error: "Ambiguous sessionId",
+                message: "Use /internal/servers/:serverId/sessions/:sessionId",
+            });
         }
 
         return {
             ok: true,
-            session,
+            session: sessions[0],
         };
     });
 }

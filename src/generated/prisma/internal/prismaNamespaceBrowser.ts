@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   ReforgerSession: 'ReforgerSession',
+  ReforgerObjective: 'ReforgerObjective',
   ReforgerEvent: 'ReforgerEvent'
 } as const
 
@@ -86,12 +87,26 @@ export const ReforgerSessionScalarFieldEnum = {
 export type ReforgerSessionScalarFieldEnum = (typeof ReforgerSessionScalarFieldEnum)[keyof typeof ReforgerSessionScalarFieldEnum]
 
 
+export const ReforgerObjectiveScalarFieldEnum = {
+  id: 'id',
+  sessionDbId: 'sessionDbId',
+  taskId: 'taskId',
+  title: 'title',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReforgerObjectiveScalarFieldEnum = (typeof ReforgerObjectiveScalarFieldEnum)[keyof typeof ReforgerObjectiveScalarFieldEnum]
+
+
 export const ReforgerEventScalarFieldEnum = {
   id: 'id',
   eventId: 'eventId',
   sessionDbId: 'sessionDbId',
   type: 'type',
   taskId: 'taskId',
+  objectiveDbId: 'objectiveDbId',
   oldState: 'oldState',
   oldStateName: 'oldStateName',
   newState: 'newState',

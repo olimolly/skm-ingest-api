@@ -214,6 +214,7 @@ export type ReforgerSessionWhereInput = {
   endedAt?: Prisma.DateTimeNullableFilter<"ReforgerSession"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ReforgerSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ReforgerSession"> | Date | string
+  objectives?: Prisma.ReforgerObjectiveListRelationFilter
   events?: Prisma.ReforgerEventListRelationFilter
 }
 
@@ -227,24 +228,27 @@ export type ReforgerSessionOrderByWithRelationInput = {
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  objectives?: Prisma.ReforgerObjectiveOrderByRelationAggregateInput
   events?: Prisma.ReforgerEventOrderByRelationAggregateInput
 }
 
 export type ReforgerSessionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  sessionId?: string
+  serverId_sessionId?: Prisma.ReforgerSessionServerIdSessionIdCompoundUniqueInput
   AND?: Prisma.ReforgerSessionWhereInput | Prisma.ReforgerSessionWhereInput[]
   OR?: Prisma.ReforgerSessionWhereInput[]
   NOT?: Prisma.ReforgerSessionWhereInput | Prisma.ReforgerSessionWhereInput[]
   serverId?: Prisma.StringFilter<"ReforgerSession"> | string
+  sessionId?: Prisma.StringFilter<"ReforgerSession"> | string
   missionId?: Prisma.StringFilter<"ReforgerSession"> | string
   missionName?: Prisma.StringNullableFilter<"ReforgerSession"> | string | null
   startedAt?: Prisma.DateTimeNullableFilter<"ReforgerSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableFilter<"ReforgerSession"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ReforgerSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ReforgerSession"> | Date | string
+  objectives?: Prisma.ReforgerObjectiveListRelationFilter
   events?: Prisma.ReforgerEventListRelationFilter
-}, "id" | "sessionId">
+}, "id" | "serverId_sessionId">
 
 export type ReforgerSessionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -286,6 +290,7 @@ export type ReforgerSessionCreateInput = {
   endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  objectives?: Prisma.ReforgerObjectiveCreateNestedManyWithoutSessionInput
   events?: Prisma.ReforgerEventCreateNestedManyWithoutSessionInput
 }
 
@@ -299,6 +304,7 @@ export type ReforgerSessionUncheckedCreateInput = {
   endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  objectives?: Prisma.ReforgerObjectiveUncheckedCreateNestedManyWithoutSessionInput
   events?: Prisma.ReforgerEventUncheckedCreateNestedManyWithoutSessionInput
 }
 
@@ -312,6 +318,7 @@ export type ReforgerSessionUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  objectives?: Prisma.ReforgerObjectiveUpdateManyWithoutSessionNestedInput
   events?: Prisma.ReforgerEventUpdateManyWithoutSessionNestedInput
 }
 
@@ -325,6 +332,7 @@ export type ReforgerSessionUncheckedUpdateInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  objectives?: Prisma.ReforgerObjectiveUncheckedUpdateManyWithoutSessionNestedInput
   events?: Prisma.ReforgerEventUncheckedUpdateManyWithoutSessionNestedInput
 }
 
@@ -362,6 +370,11 @@ export type ReforgerSessionUncheckedUpdateManyInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReforgerSessionServerIdSessionIdCompoundUniqueInput = {
+  serverId: string
+  sessionId: string
 }
 
 export type ReforgerSessionCountOrderByAggregateInput = {
@@ -421,6 +434,20 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type ReforgerSessionCreateNestedOneWithoutObjectivesInput = {
+  create?: Prisma.XOR<Prisma.ReforgerSessionCreateWithoutObjectivesInput, Prisma.ReforgerSessionUncheckedCreateWithoutObjectivesInput>
+  connectOrCreate?: Prisma.ReforgerSessionCreateOrConnectWithoutObjectivesInput
+  connect?: Prisma.ReforgerSessionWhereUniqueInput
+}
+
+export type ReforgerSessionUpdateOneRequiredWithoutObjectivesNestedInput = {
+  create?: Prisma.XOR<Prisma.ReforgerSessionCreateWithoutObjectivesInput, Prisma.ReforgerSessionUncheckedCreateWithoutObjectivesInput>
+  connectOrCreate?: Prisma.ReforgerSessionCreateOrConnectWithoutObjectivesInput
+  upsert?: Prisma.ReforgerSessionUpsertWithoutObjectivesInput
+  connect?: Prisma.ReforgerSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReforgerSessionUpdateToOneWithWhereWithoutObjectivesInput, Prisma.ReforgerSessionUpdateWithoutObjectivesInput>, Prisma.ReforgerSessionUncheckedUpdateWithoutObjectivesInput>
+}
+
 export type ReforgerSessionCreateNestedOneWithoutEventsInput = {
   create?: Prisma.XOR<Prisma.ReforgerSessionCreateWithoutEventsInput, Prisma.ReforgerSessionUncheckedCreateWithoutEventsInput>
   connectOrCreate?: Prisma.ReforgerSessionCreateOrConnectWithoutEventsInput
@@ -435,6 +462,74 @@ export type ReforgerSessionUpdateOneRequiredWithoutEventsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ReforgerSessionUpdateToOneWithWhereWithoutEventsInput, Prisma.ReforgerSessionUpdateWithoutEventsInput>, Prisma.ReforgerSessionUncheckedUpdateWithoutEventsInput>
 }
 
+export type ReforgerSessionCreateWithoutObjectivesInput = {
+  id?: string
+  serverId: string
+  sessionId: string
+  missionId: string
+  missionName?: string | null
+  startedAt?: Date | string | null
+  endedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  events?: Prisma.ReforgerEventCreateNestedManyWithoutSessionInput
+}
+
+export type ReforgerSessionUncheckedCreateWithoutObjectivesInput = {
+  id?: string
+  serverId: string
+  sessionId: string
+  missionId: string
+  missionName?: string | null
+  startedAt?: Date | string | null
+  endedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  events?: Prisma.ReforgerEventUncheckedCreateNestedManyWithoutSessionInput
+}
+
+export type ReforgerSessionCreateOrConnectWithoutObjectivesInput = {
+  where: Prisma.ReforgerSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReforgerSessionCreateWithoutObjectivesInput, Prisma.ReforgerSessionUncheckedCreateWithoutObjectivesInput>
+}
+
+export type ReforgerSessionUpsertWithoutObjectivesInput = {
+  update: Prisma.XOR<Prisma.ReforgerSessionUpdateWithoutObjectivesInput, Prisma.ReforgerSessionUncheckedUpdateWithoutObjectivesInput>
+  create: Prisma.XOR<Prisma.ReforgerSessionCreateWithoutObjectivesInput, Prisma.ReforgerSessionUncheckedCreateWithoutObjectivesInput>
+  where?: Prisma.ReforgerSessionWhereInput
+}
+
+export type ReforgerSessionUpdateToOneWithWhereWithoutObjectivesInput = {
+  where?: Prisma.ReforgerSessionWhereInput
+  data: Prisma.XOR<Prisma.ReforgerSessionUpdateWithoutObjectivesInput, Prisma.ReforgerSessionUncheckedUpdateWithoutObjectivesInput>
+}
+
+export type ReforgerSessionUpdateWithoutObjectivesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  serverId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  missionId?: Prisma.StringFieldUpdateOperationsInput | string
+  missionName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.ReforgerEventUpdateManyWithoutSessionNestedInput
+}
+
+export type ReforgerSessionUncheckedUpdateWithoutObjectivesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  serverId?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  missionId?: Prisma.StringFieldUpdateOperationsInput | string
+  missionName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.ReforgerEventUncheckedUpdateManyWithoutSessionNestedInput
+}
+
 export type ReforgerSessionCreateWithoutEventsInput = {
   id?: string
   serverId: string
@@ -445,6 +540,7 @@ export type ReforgerSessionCreateWithoutEventsInput = {
   endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  objectives?: Prisma.ReforgerObjectiveCreateNestedManyWithoutSessionInput
 }
 
 export type ReforgerSessionUncheckedCreateWithoutEventsInput = {
@@ -457,6 +553,7 @@ export type ReforgerSessionUncheckedCreateWithoutEventsInput = {
   endedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  objectives?: Prisma.ReforgerObjectiveUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type ReforgerSessionCreateOrConnectWithoutEventsInput = {
@@ -485,6 +582,7 @@ export type ReforgerSessionUpdateWithoutEventsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  objectives?: Prisma.ReforgerObjectiveUpdateManyWithoutSessionNestedInput
 }
 
 export type ReforgerSessionUncheckedUpdateWithoutEventsInput = {
@@ -497,6 +595,7 @@ export type ReforgerSessionUncheckedUpdateWithoutEventsInput = {
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  objectives?: Prisma.ReforgerObjectiveUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 
@@ -505,10 +604,12 @@ export type ReforgerSessionUncheckedUpdateWithoutEventsInput = {
  */
 
 export type ReforgerSessionCountOutputType = {
+  objectives: number
   events: number
 }
 
 export type ReforgerSessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  objectives?: boolean | ReforgerSessionCountOutputTypeCountObjectivesArgs
   events?: boolean | ReforgerSessionCountOutputTypeCountEventsArgs
 }
 
@@ -520,6 +621,13 @@ export type ReforgerSessionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Ty
    * Select specific fields to fetch from the ReforgerSessionCountOutputType
    */
   select?: Prisma.ReforgerSessionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ReforgerSessionCountOutputType without action
+ */
+export type ReforgerSessionCountOutputTypeCountObjectivesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReforgerObjectiveWhereInput
 }
 
 /**
@@ -540,6 +648,7 @@ export type ReforgerSessionSelect<ExtArgs extends runtime.Types.Extensions.Inter
   endedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  objectives?: boolean | Prisma.ReforgerSession$objectivesArgs<ExtArgs>
   events?: boolean | Prisma.ReforgerSession$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.ReforgerSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["reforgerSession"]>
@@ -582,6 +691,7 @@ export type ReforgerSessionSelectScalar = {
 
 export type ReforgerSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "serverId" | "sessionId" | "missionId" | "missionName" | "startedAt" | "endedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["reforgerSession"]>
 export type ReforgerSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  objectives?: boolean | Prisma.ReforgerSession$objectivesArgs<ExtArgs>
   events?: boolean | Prisma.ReforgerSession$eventsArgs<ExtArgs>
   _count?: boolean | Prisma.ReforgerSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -591,6 +701,7 @@ export type ReforgerSessionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Ty
 export type $ReforgerSessionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ReforgerSession"
   objects: {
+    objectives: Prisma.$ReforgerObjectivePayload<ExtArgs>[]
     events: Prisma.$ReforgerEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -997,6 +1108,7 @@ readonly fields: ReforgerSessionFieldRefs;
  */
 export interface Prisma__ReforgerSessionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  objectives<T extends Prisma.ReforgerSession$objectivesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReforgerSession$objectivesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReforgerObjectivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.ReforgerSession$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReforgerSession$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReforgerEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1426,6 +1538,30 @@ export type ReforgerSessionDeleteManyArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many ReforgerSessions to delete.
    */
   limit?: number
+}
+
+/**
+ * ReforgerSession.objectives
+ */
+export type ReforgerSession$objectivesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ReforgerObjective
+   */
+  select?: Prisma.ReforgerObjectiveSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ReforgerObjective
+   */
+  omit?: Prisma.ReforgerObjectiveOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReforgerObjectiveInclude<ExtArgs> | null
+  where?: Prisma.ReforgerObjectiveWhereInput
+  orderBy?: Prisma.ReforgerObjectiveOrderByWithRelationInput | Prisma.ReforgerObjectiveOrderByWithRelationInput[]
+  cursor?: Prisma.ReforgerObjectiveWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReforgerObjectiveScalarFieldEnum | Prisma.ReforgerObjectiveScalarFieldEnum[]
 }
 
 /**

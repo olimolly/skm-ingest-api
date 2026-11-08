@@ -47,6 +47,11 @@ export { Prisma }
  */
 export type ReforgerSession = Prisma.ReforgerSessionModel
 /**
+ * Model ReforgerObjective
+ * 
+ */
+export type ReforgerObjective = Prisma.ReforgerObjectiveModel
+/**
  * Model ReforgerEvent
  * 
  */

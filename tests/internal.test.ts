@@ -34,3 +34,14 @@ test("GET /internal/sessions returns 200 with valid Authorization header", async
     assert.equal(body.ok, true);
     assert.ok(Array.isArray(body.sessions));
 });
+
+test("GET /internal/servers/:serverId/sessions/:sessionId returns 401 without Authorization header", async () => {
+    const app = buildApp();
+
+    const response = await app.inject({
+        method: "GET",
+        url: "/internal/servers/server-1/sessions/session-1",
+    });
+
+    assert.equal(response.statusCode, 401);
+});

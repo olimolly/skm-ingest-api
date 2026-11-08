@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   ReforgerSession: 'ReforgerSession',
+  ReforgerObjective: 'ReforgerObjective',
   ReforgerEvent: 'ReforgerEvent'
 } as const
 
@@ -401,7 +402,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "reforgerSession" | "reforgerEvent"
+    modelProps: "reforgerSession" | "reforgerObjective" | "reforgerEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -476,6 +477,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ReforgerSessionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ReforgerSessionCountAggregateOutputType> | number
+        }
+      }
+    }
+    ReforgerObjective: {
+      payload: Prisma.$ReforgerObjectivePayload<ExtArgs>
+      fields: Prisma.ReforgerObjectiveFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReforgerObjectiveFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReforgerObjectiveFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>
+        }
+        findFirst: {
+          args: Prisma.ReforgerObjectiveFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReforgerObjectiveFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>
+        }
+        findMany: {
+          args: Prisma.ReforgerObjectiveFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>[]
+        }
+        create: {
+          args: Prisma.ReforgerObjectiveCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>
+        }
+        createMany: {
+          args: Prisma.ReforgerObjectiveCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReforgerObjectiveCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>[]
+        }
+        delete: {
+          args: Prisma.ReforgerObjectiveDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>
+        }
+        update: {
+          args: Prisma.ReforgerObjectiveUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>
+        }
+        deleteMany: {
+          args: Prisma.ReforgerObjectiveDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReforgerObjectiveUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReforgerObjectiveUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>[]
+        }
+        upsert: {
+          args: Prisma.ReforgerObjectiveUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReforgerObjectivePayload>
+        }
+        aggregate: {
+          args: Prisma.ReforgerObjectiveAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReforgerObjective>
+        }
+        groupBy: {
+          args: Prisma.ReforgerObjectiveGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReforgerObjectiveGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReforgerObjectiveCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReforgerObjectiveCountAggregateOutputType> | number
         }
       }
     }
@@ -607,12 +682,26 @@ export const ReforgerSessionScalarFieldEnum = {
 export type ReforgerSessionScalarFieldEnum = (typeof ReforgerSessionScalarFieldEnum)[keyof typeof ReforgerSessionScalarFieldEnum]
 
 
+export const ReforgerObjectiveScalarFieldEnum = {
+  id: 'id',
+  sessionDbId: 'sessionDbId',
+  taskId: 'taskId',
+  title: 'title',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReforgerObjectiveScalarFieldEnum = (typeof ReforgerObjectiveScalarFieldEnum)[keyof typeof ReforgerObjectiveScalarFieldEnum]
+
+
 export const ReforgerEventScalarFieldEnum = {
   id: 'id',
   eventId: 'eventId',
   sessionDbId: 'sessionDbId',
   type: 'type',
   taskId: 'taskId',
+  objectiveDbId: 'objectiveDbId',
   oldState: 'oldState',
   oldStateName: 'oldStateName',
   newState: 'newState',
@@ -851,6 +940,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   reforgerSession?: Prisma.ReforgerSessionOmit
+  reforgerObjective?: Prisma.ReforgerObjectiveOmit
   reforgerEvent?: Prisma.ReforgerEventOmit
 }
 

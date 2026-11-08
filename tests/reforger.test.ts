@@ -3,9 +3,9 @@ import assert from "node:assert/strict";
 
 import { buildApp } from "../src/app.js";
 
-const TEST_REFORGER_API_KEY = "test-reforger-api-key";
+const TEST_REFORGER_INGEST_API_KEY = "test-reforger-api-key";
 
-process.env.REFORGER_API_KEY = TEST_REFORGER_API_KEY;
+process.env.REFORGER_INGEST_API_KEY = TEST_REFORGER_INGEST_API_KEY;
 process.env.ALLOWED_REFORGER_SERVER_IDS = "local-reforger";
 process.env.ALLOWED_REFORGER_IPS = "";
 
@@ -16,7 +16,7 @@ test("POST /reforger/events should accept a valid authenticated Reforger payload
         method: "POST",
         url: "/reforger/events",
         payload: {
-            apiKey: TEST_REFORGER_API_KEY,
+            apiKey: TEST_REFORGER_INGEST_API_KEY,
             serverId: "local-reforger",
             sessionId: "session_1",
             missionId: "olives_and_dates",
@@ -26,6 +26,16 @@ test("POST /reforger/events should accept a valid authenticated Reforger payload
                     eventId: "session_1_000001",
                     type: "SESSION_STARTED",
                     timestamp: 1780828484,
+                },
+                {
+                    eventId: "session_1_000001_objective",
+                    type: "OBJECTIVE_STATE_CHANGED",
+                    taskId: "task_1_1",
+                    taskTitle: "Secure the town",
+                    taskDescription: "Eliminate the hostile forces in the objective area.",
+                    newState: 1,
+                    newStateName: "ASSIGNED",
+                    timestamp: 1780828490,
                 },
             ],
         },
@@ -69,7 +79,7 @@ test("POST /reforger/events should reject a payload from a non-whitelisted serve
         method: "POST",
         url: "/reforger/events",
         payload: {
-            apiKey: TEST_REFORGER_API_KEY,
+            apiKey: TEST_REFORGER_INGEST_API_KEY,
             serverId: "unknown-server",
             sessionId: "session_1",
             missionId: "olives_and_dates",

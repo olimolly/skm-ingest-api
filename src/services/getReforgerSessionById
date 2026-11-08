@@ -1,11 +1,19 @@
 import { prisma } from "../lib/prisma.js";
 
-export async function getReforgerSessionById(sessionId: string) {
+export async function getReforgerSessionById(serverId: string, sessionId: string) {
     return prisma.reforgerSession.findUnique({
         where: {
-            sessionId,
+            serverId_sessionId: {
+                serverId,
+                sessionId,
+            },
         },
         include: {
+            objectives: {
+                orderBy: {
+                    taskId: "asc",
+                },
+            },
             events: {
                 orderBy: {
                     eventTimestamp: "asc",

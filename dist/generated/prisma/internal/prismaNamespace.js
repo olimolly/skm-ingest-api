@@ -68,6 +68,7 @@ export const JsonNull = runtime.JsonNull;
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
     ReforgerSession: 'ReforgerSession',
+    ReforgerObjective: 'ReforgerObjective',
     ReforgerEvent: 'ReforgerEvent'
 };
 /**
@@ -90,12 +91,22 @@ export const ReforgerSessionScalarFieldEnum = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
+export const ReforgerObjectiveScalarFieldEnum = {
+    id: 'id',
+    sessionDbId: 'sessionDbId',
+    taskId: 'taskId',
+    title: 'title',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
 export const ReforgerEventScalarFieldEnum = {
     id: 'id',
     eventId: 'eventId',
     sessionDbId: 'sessionDbId',
     type: 'type',
     taskId: 'taskId',
+    objectiveDbId: 'objectiveDbId',
     oldState: 'oldState',
     oldStateName: 'oldStateName',
     newState: 'newState',

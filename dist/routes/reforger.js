@@ -12,7 +12,7 @@ export default async function reforgerRoutes(app) {
             return reply.status(400).send({ error: "Invalid payload" });
         }
         const payload = result.data;
-        if (payload.apiKey !== process.env.REFORGER_API_KEY) {
+        if (payload.apiKey !== process.env.REFORGER_INGEST_API_KEY) {
             request.log.warn({
                 serverId: payload.serverId,
                 sessionId: payload.sessionId,

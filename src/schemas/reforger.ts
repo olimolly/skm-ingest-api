@@ -7,6 +7,8 @@ export const ReforgerEventSchema = z.object({
     timestamp: z.number(),
 
     taskId: z.string().optional(),
+    taskTitle: z.string().max(250).optional(),
+    taskDescription: z.string().max(4000).optional(),
 
     oldState: z.number().optional(),
     oldStateName: z.string().optional(),

@@ -9,5 +9,6 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/ReforgerSession.js'
+export type * from './models/ReforgerObjective.js'
 export type * from './models/ReforgerEvent.js'
 export type * from './commonInputTypes.js'
