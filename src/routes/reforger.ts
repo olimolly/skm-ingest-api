@@ -2,14 +2,16 @@ import type { FastifyInstance } from "fastify";
 import { ReforgerPayloadSchema } from "../schemas/reforger.js";
 import { saveReforgerEvents } from "../services/saveReforgerEvents.js";
 import { isAllowedReforgerIp, isAllowedReforgerServerId } from "../config/whitelist.js";
+import { getClientIp } from "../config/clientIp.js";
 
 export default async function reforgerRoutes(app: FastifyInstance) {
     app.post("/reforger/events", async (request, reply) => {
+        const clientIp = getClientIp(request);
         const result = ReforgerPayloadSchema.safeParse(request.body);
 
         if (!result.success) {
             request.log.warn({
-                ip: request.ip,
+                ip: clientIp,
                 issues: result.error.issues,
             }, "Rejected Reforger payload: invalid schema");
 
@@ -22,7 +24,7 @@ export default async function reforgerRoutes(app: FastifyInstance) {
             request.log.warn({
                 serverId: payload.serverId,
                 sessionId: payload.sessionId,
-                ip: request.ip,
+                ip: clientIp,
             }, "Rejected Reforger payload: invalid apiKey");
 
             return reply.status(401).send({ error: "Unauthorized" });
@@ -32,17 +34,17 @@ export default async function reforgerRoutes(app: FastifyInstance) {
             request.log.warn({
                 serverId: payload.serverId,
                 sessionId: payload.sessionId,
-                ip: request.ip,
+                ip: clientIp,
             }, "Rejected Reforger payload: forbidden serverId");
 
             return reply.status(403).send({ error: "Forbidden serverId" });
         }
 
-        if (!isAllowedReforgerIp(request.ip)) {
+        if (!isAllowedReforgerIp(clientIp)) {
             request.log.warn({
                 serverId: payload.serverId,
                 sessionId: payload.sessionId,
-                ip: request.ip,
+                ip: clientIp,
             }, "Rejected Reforger payload: forbidden IP");
 
             return reply.status(403).send({ error: "Forbidden IP" });
@@ -56,7 +58,7 @@ export default async function reforgerRoutes(app: FastifyInstance) {
             missionId: payload.missionId,
             received: payload.events.length,
             inserted,
-            ip: request.ip,
+            ip: clientIp,
         }, "Accepted Reforger payload");
 
         return reply.send({
