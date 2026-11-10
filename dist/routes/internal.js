@@ -1,5 +1,6 @@
 import { prisma } from "../lib/prisma.js";
 const INTERNAL_API_KEY = process.env.INTERNAL_API_KEY;
+const MAX_SEARCH_QUERY_LENGTH = 80;
 if (!INTERNAL_API_KEY) {
     throw new Error("Missing INTERNAL_API_KEY");
 }
@@ -15,9 +16,16 @@ export default async function internalRoutes(app) {
         if (!isAuthorized(request.headers.authorization)) {
             return reply.status(401).send({ error: "Unauthorized" });
         }
+        const rawQ = request.query.q;
+        if (rawQ !== undefined && rawQ.length > MAX_SEARCH_QUERY_LENGTH) {
+            return reply.status(400).send({
+                error: "Invalid query",
+                message: `q must not exceed ${MAX_SEARCH_QUERY_LENGTH} characters`,
+            });
+        }
         const page = parsePositiveInt(request.query.page, 1);
         const pageSize = Math.min(parsePositiveInt(request.query.pageSize, 12), 50);
-        const q = request.query.q?.trim().slice(0, 80);
+        const q = rawQ?.trim();
         const where = q
             ? {
                 OR: [
