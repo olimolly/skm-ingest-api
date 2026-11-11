@@ -7,6 +7,7 @@ export const ReforgerEventSchema = z.object({
     timestamp: z.number(),
 
     taskId: z.string().optional(),
+    parentTaskId: z.string().optional(),
     taskTitle: z.string().max(250).optional(),
     taskDescription: z.string().max(4000).optional(),
 
@@ -15,6 +16,21 @@ export const ReforgerEventSchema = z.object({
 
     newState: z.number().optional(),
     newStateName: z.string().optional(),
+
+    oldProgress: z.number().min(0).max(100).optional(),
+    newProgress: z.number().min(0).max(100).optional(),
+}).superRefine((event, ctx) => {
+    const requiresTaskId = event.parentTaskId !== undefined
+        || event.oldProgress !== undefined
+        || event.newProgress !== undefined;
+
+    if (requiresTaskId && !event.taskId) {
+        ctx.addIssue({
+            code: "custom",
+            path: ["taskId"],
+            message: "taskId is required for objective hierarchy or progress",
+        });
+    }
 });
 
 export const ReforgerPayloadSchema = z.object({

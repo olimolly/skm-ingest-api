@@ -1,6 +1,56 @@
 # skm-ingest-api
 SKM Ingest API is a lightweight Fastify-based backend service designed to receive, validate, and store live telemetry and mission events from Arma Reforger servers.  The service acts as a secure ingestion layer between Reforger gameplay sessions and external analytics or administration systems.
 
+## Progression des objectifs Reforger
+
+Les événements associés à un objectif peuvent inclure `oldProgress` et
+`newProgress`. Ces valeurs sont des pourcentages décimaux compris entre `0` et
+`100`. Elles sont enregistrées avec l'événement afin de conserver l'historique
+complet de la progression.
+
+`parentTaskId` permet de rattacher un sous-objectif à son objectif parent. La
+progression reste enregistrée séparément pour chaque tâche : Reforger demeure
+la source de vérité pour la valeur du parent, notamment lorsqu'il combine la
+progression de ses enfants avec une progression indépendante.
+
+Règles de hiérarchie :
+
+- un objectif racine omet `parentTaskId` ;
+- chaque sous-objectif transmet le `taskId` de son parent dans `parentTaskId` ;
+- plusieurs sous-objectifs peuvent partager le même `parentTaskId` ;
+- le parent doit également émettre ses propres événements pour être enregistré
+  et exposer sa progression officielle ;
+- l'API ne recalcule pas la progression du parent à partir des enfants.
+
+Une progression supérieure à `0` correspond normalement à l'état
+`PROGRESSED`. Lorsqu'elle atteint `100`, Reforger fait passer l'objectif à
+`COMPLETED`. Les champs de progression sont optionnels pour préserver la
+compatibilité avec les tâches qui n'utilisent pas la progression incrémentale.
+
+Exemple d'événement :
+
+```json
+{
+  "eventId": "session-1_objective-1_progress-1",
+  "type": "OBJECTIVE_PROGRESS_CHANGED",
+  "timestamp": 1794132300,
+  "taskId": "objective-1",
+  "parentTaskId": "parent-objective-1",
+  "oldStateName": "ASSIGNED",
+  "newStateName": "PROGRESSED",
+  "oldProgress": 0,
+  "newProgress": 50.5
+}
+```
+
+La migration Prisma ajoutant `oldProgress`, `newProgress`, `parentTaskId` et
+l'index de hiérarchie doit être appliquée avant de déployer la version
+correspondante de l'API :
+
+```bash
+npx prisma migrate deploy
+```
+
 ## Fonctionnement et sécurité du rate limiting
 
 Le rate limiting identifie chaque client avec l'adresse IP fournie par l'en-tête

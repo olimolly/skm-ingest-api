@@ -29,11 +29,15 @@ export type AggregateReforgerEvent = {
 export type ReforgerEventAvgAggregateOutputType = {
   oldState: number | null
   newState: number | null
+  oldProgress: number | null
+  newProgress: number | null
 }
 
 export type ReforgerEventSumAggregateOutputType = {
   oldState: number | null
   newState: number | null
+  oldProgress: number | null
+  newProgress: number | null
 }
 
 export type ReforgerEventMinAggregateOutputType = {
@@ -47,6 +51,8 @@ export type ReforgerEventMinAggregateOutputType = {
   oldStateName: string | null
   newState: number | null
   newStateName: string | null
+  oldProgress: number | null
+  newProgress: number | null
   eventTimestamp: Date | null
   createdAt: Date | null
 }
@@ -62,6 +68,8 @@ export type ReforgerEventMaxAggregateOutputType = {
   oldStateName: string | null
   newState: number | null
   newStateName: string | null
+  oldProgress: number | null
+  newProgress: number | null
   eventTimestamp: Date | null
   createdAt: Date | null
 }
@@ -77,6 +85,8 @@ export type ReforgerEventCountAggregateOutputType = {
   oldStateName: number
   newState: number
   newStateName: number
+  oldProgress: number
+  newProgress: number
   eventTimestamp: number
   rawJson: number
   createdAt: number
@@ -87,11 +97,15 @@ export type ReforgerEventCountAggregateOutputType = {
 export type ReforgerEventAvgAggregateInputType = {
   oldState?: true
   newState?: true
+  oldProgress?: true
+  newProgress?: true
 }
 
 export type ReforgerEventSumAggregateInputType = {
   oldState?: true
   newState?: true
+  oldProgress?: true
+  newProgress?: true
 }
 
 export type ReforgerEventMinAggregateInputType = {
@@ -105,6 +119,8 @@ export type ReforgerEventMinAggregateInputType = {
   oldStateName?: true
   newState?: true
   newStateName?: true
+  oldProgress?: true
+  newProgress?: true
   eventTimestamp?: true
   createdAt?: true
 }
@@ -120,6 +136,8 @@ export type ReforgerEventMaxAggregateInputType = {
   oldStateName?: true
   newState?: true
   newStateName?: true
+  oldProgress?: true
+  newProgress?: true
   eventTimestamp?: true
   createdAt?: true
 }
@@ -135,6 +153,8 @@ export type ReforgerEventCountAggregateInputType = {
   oldStateName?: true
   newState?: true
   newStateName?: true
+  oldProgress?: true
+  newProgress?: true
   eventTimestamp?: true
   rawJson?: true
   createdAt?: true
@@ -238,6 +258,8 @@ export type ReforgerEventGroupByOutputType = {
   oldStateName: string | null
   newState: number | null
   newStateName: string | null
+  oldProgress: number | null
+  newProgress: number | null
   eventTimestamp: Date
   rawJson: runtime.JsonValue
   createdAt: Date
@@ -277,6 +299,8 @@ export type ReforgerEventWhereInput = {
   oldStateName?: Prisma.StringNullableFilter<"ReforgerEvent"> | string | null
   newState?: Prisma.IntNullableFilter<"ReforgerEvent"> | number | null
   newStateName?: Prisma.StringNullableFilter<"ReforgerEvent"> | string | null
+  oldProgress?: Prisma.FloatNullableFilter<"ReforgerEvent"> | number | null
+  newProgress?: Prisma.FloatNullableFilter<"ReforgerEvent"> | number | null
   eventTimestamp?: Prisma.DateTimeFilter<"ReforgerEvent"> | Date | string
   rawJson?: Prisma.JsonFilter<"ReforgerEvent">
   createdAt?: Prisma.DateTimeFilter<"ReforgerEvent"> | Date | string
@@ -295,6 +319,8 @@ export type ReforgerEventOrderByWithRelationInput = {
   oldStateName?: Prisma.SortOrderInput | Prisma.SortOrder
   newState?: Prisma.SortOrderInput | Prisma.SortOrder
   newStateName?: Prisma.SortOrderInput | Prisma.SortOrder
+  oldProgress?: Prisma.SortOrderInput | Prisma.SortOrder
+  newProgress?: Prisma.SortOrderInput | Prisma.SortOrder
   eventTimestamp?: Prisma.SortOrder
   rawJson?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -316,6 +342,8 @@ export type ReforgerEventWhereUniqueInput = Prisma.AtLeast<{
   oldStateName?: Prisma.StringNullableFilter<"ReforgerEvent"> | string | null
   newState?: Prisma.IntNullableFilter<"ReforgerEvent"> | number | null
   newStateName?: Prisma.StringNullableFilter<"ReforgerEvent"> | string | null
+  oldProgress?: Prisma.FloatNullableFilter<"ReforgerEvent"> | number | null
+  newProgress?: Prisma.FloatNullableFilter<"ReforgerEvent"> | number | null
   eventTimestamp?: Prisma.DateTimeFilter<"ReforgerEvent"> | Date | string
   rawJson?: Prisma.JsonFilter<"ReforgerEvent">
   createdAt?: Prisma.DateTimeFilter<"ReforgerEvent"> | Date | string
@@ -334,6 +362,8 @@ export type ReforgerEventOrderByWithAggregationInput = {
   oldStateName?: Prisma.SortOrderInput | Prisma.SortOrder
   newState?: Prisma.SortOrderInput | Prisma.SortOrder
   newStateName?: Prisma.SortOrderInput | Prisma.SortOrder
+  oldProgress?: Prisma.SortOrderInput | Prisma.SortOrder
+  newProgress?: Prisma.SortOrderInput | Prisma.SortOrder
   eventTimestamp?: Prisma.SortOrder
   rawJson?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -358,6 +388,8 @@ export type ReforgerEventScalarWhereWithAggregatesInput = {
   oldStateName?: Prisma.StringNullableWithAggregatesFilter<"ReforgerEvent"> | string | null
   newState?: Prisma.IntNullableWithAggregatesFilter<"ReforgerEvent"> | number | null
   newStateName?: Prisma.StringNullableWithAggregatesFilter<"ReforgerEvent"> | string | null
+  oldProgress?: Prisma.FloatNullableWithAggregatesFilter<"ReforgerEvent"> | number | null
+  newProgress?: Prisma.FloatNullableWithAggregatesFilter<"ReforgerEvent"> | number | null
   eventTimestamp?: Prisma.DateTimeWithAggregatesFilter<"ReforgerEvent"> | Date | string
   rawJson?: Prisma.JsonWithAggregatesFilter<"ReforgerEvent">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ReforgerEvent"> | Date | string
@@ -372,6 +404,8 @@ export type ReforgerEventCreateInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -390,6 +424,8 @@ export type ReforgerEventUncheckedCreateInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -404,6 +440,8 @@ export type ReforgerEventUpdateInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -422,6 +460,8 @@ export type ReforgerEventUncheckedUpdateInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -438,6 +478,8 @@ export type ReforgerEventCreateManyInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -452,6 +494,8 @@ export type ReforgerEventUpdateManyMutationInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -468,6 +512,8 @@ export type ReforgerEventUncheckedUpdateManyInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -494,6 +540,8 @@ export type ReforgerEventCountOrderByAggregateInput = {
   oldStateName?: Prisma.SortOrder
   newState?: Prisma.SortOrder
   newStateName?: Prisma.SortOrder
+  oldProgress?: Prisma.SortOrder
+  newProgress?: Prisma.SortOrder
   eventTimestamp?: Prisma.SortOrder
   rawJson?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -502,6 +550,8 @@ export type ReforgerEventCountOrderByAggregateInput = {
 export type ReforgerEventAvgOrderByAggregateInput = {
   oldState?: Prisma.SortOrder
   newState?: Prisma.SortOrder
+  oldProgress?: Prisma.SortOrder
+  newProgress?: Prisma.SortOrder
 }
 
 export type ReforgerEventMaxOrderByAggregateInput = {
@@ -515,6 +565,8 @@ export type ReforgerEventMaxOrderByAggregateInput = {
   oldStateName?: Prisma.SortOrder
   newState?: Prisma.SortOrder
   newStateName?: Prisma.SortOrder
+  oldProgress?: Prisma.SortOrder
+  newProgress?: Prisma.SortOrder
   eventTimestamp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -530,6 +582,8 @@ export type ReforgerEventMinOrderByAggregateInput = {
   oldStateName?: Prisma.SortOrder
   newState?: Prisma.SortOrder
   newStateName?: Prisma.SortOrder
+  oldProgress?: Prisma.SortOrder
+  newProgress?: Prisma.SortOrder
   eventTimestamp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -537,6 +591,8 @@ export type ReforgerEventMinOrderByAggregateInput = {
 export type ReforgerEventSumOrderByAggregateInput = {
   oldState?: Prisma.SortOrder
   newState?: Prisma.SortOrder
+  oldProgress?: Prisma.SortOrder
+  newProgress?: Prisma.SortOrder
 }
 
 export type ReforgerEventCreateNestedManyWithoutSessionInput = {
@@ -631,6 +687,14 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type ReforgerEventCreateWithoutSessionInput = {
   id?: string
   eventId: string
@@ -640,6 +704,8 @@ export type ReforgerEventCreateWithoutSessionInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -656,6 +722,8 @@ export type ReforgerEventUncheckedCreateWithoutSessionInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -701,6 +769,8 @@ export type ReforgerEventScalarWhereInput = {
   oldStateName?: Prisma.StringNullableFilter<"ReforgerEvent"> | string | null
   newState?: Prisma.IntNullableFilter<"ReforgerEvent"> | number | null
   newStateName?: Prisma.StringNullableFilter<"ReforgerEvent"> | string | null
+  oldProgress?: Prisma.FloatNullableFilter<"ReforgerEvent"> | number | null
+  newProgress?: Prisma.FloatNullableFilter<"ReforgerEvent"> | number | null
   eventTimestamp?: Prisma.DateTimeFilter<"ReforgerEvent"> | Date | string
   rawJson?: Prisma.JsonFilter<"ReforgerEvent">
   createdAt?: Prisma.DateTimeFilter<"ReforgerEvent"> | Date | string
@@ -715,6 +785,8 @@ export type ReforgerEventCreateWithoutObjectiveInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -731,6 +803,8 @@ export type ReforgerEventUncheckedCreateWithoutObjectiveInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -772,6 +846,8 @@ export type ReforgerEventCreateManySessionInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -786,6 +862,8 @@ export type ReforgerEventUpdateWithoutSessionInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -802,6 +880,8 @@ export type ReforgerEventUncheckedUpdateWithoutSessionInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -817,6 +897,8 @@ export type ReforgerEventUncheckedUpdateManyWithoutSessionInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -832,6 +914,8 @@ export type ReforgerEventCreateManyObjectiveInput = {
   oldStateName?: string | null
   newState?: number | null
   newStateName?: string | null
+  oldProgress?: number | null
+  newProgress?: number | null
   eventTimestamp: Date | string
   rawJson: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
@@ -846,6 +930,8 @@ export type ReforgerEventUpdateWithoutObjectiveInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -862,6 +948,8 @@ export type ReforgerEventUncheckedUpdateWithoutObjectiveInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -877,6 +965,8 @@ export type ReforgerEventUncheckedUpdateManyWithoutObjectiveInput = {
   oldStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   newState?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   newStateName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  oldProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  newProgress?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   eventTimestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rawJson?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -895,6 +985,8 @@ export type ReforgerEventSelect<ExtArgs extends runtime.Types.Extensions.Interna
   oldStateName?: boolean
   newState?: boolean
   newStateName?: boolean
+  oldProgress?: boolean
+  newProgress?: boolean
   eventTimestamp?: boolean
   rawJson?: boolean
   createdAt?: boolean
@@ -913,6 +1005,8 @@ export type ReforgerEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   oldStateName?: boolean
   newState?: boolean
   newStateName?: boolean
+  oldProgress?: boolean
+  newProgress?: boolean
   eventTimestamp?: boolean
   rawJson?: boolean
   createdAt?: boolean
@@ -931,6 +1025,8 @@ export type ReforgerEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   oldStateName?: boolean
   newState?: boolean
   newStateName?: boolean
+  oldProgress?: boolean
+  newProgress?: boolean
   eventTimestamp?: boolean
   rawJson?: boolean
   createdAt?: boolean
@@ -949,12 +1045,14 @@ export type ReforgerEventSelectScalar = {
   oldStateName?: boolean
   newState?: boolean
   newStateName?: boolean
+  oldProgress?: boolean
+  newProgress?: boolean
   eventTimestamp?: boolean
   rawJson?: boolean
   createdAt?: boolean
 }
 
-export type ReforgerEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "sessionDbId" | "type" | "taskId" | "objectiveDbId" | "oldState" | "oldStateName" | "newState" | "newStateName" | "eventTimestamp" | "rawJson" | "createdAt", ExtArgs["result"]["reforgerEvent"]>
+export type ReforgerEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "sessionDbId" | "type" | "taskId" | "objectiveDbId" | "oldState" | "oldStateName" | "newState" | "newStateName" | "oldProgress" | "newProgress" | "eventTimestamp" | "rawJson" | "createdAt", ExtArgs["result"]["reforgerEvent"]>
 export type ReforgerEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.ReforgerSessionDefaultArgs<ExtArgs>
   objective?: boolean | Prisma.ReforgerEvent$objectiveArgs<ExtArgs>
@@ -985,6 +1083,8 @@ export type $ReforgerEventPayload<ExtArgs extends runtime.Types.Extensions.Inter
     oldStateName: string | null
     newState: number | null
     newStateName: string | null
+    oldProgress: number | null
+    newProgress: number | null
     eventTimestamp: Date
     rawJson: runtime.JsonValue
     createdAt: Date
@@ -1423,6 +1523,8 @@ export interface ReforgerEventFieldRefs {
   readonly oldStateName: Prisma.FieldRef<"ReforgerEvent", 'String'>
   readonly newState: Prisma.FieldRef<"ReforgerEvent", 'Int'>
   readonly newStateName: Prisma.FieldRef<"ReforgerEvent", 'String'>
+  readonly oldProgress: Prisma.FieldRef<"ReforgerEvent", 'Float'>
+  readonly newProgress: Prisma.FieldRef<"ReforgerEvent", 'Float'>
   readonly eventTimestamp: Prisma.FieldRef<"ReforgerEvent", 'DateTime'>
   readonly rawJson: Prisma.FieldRef<"ReforgerEvent", 'Json'>
   readonly createdAt: Prisma.FieldRef<"ReforgerEvent", 'DateTime'>

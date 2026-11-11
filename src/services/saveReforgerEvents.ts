@@ -30,7 +30,7 @@ export async function saveReforgerEvents(payload: ReforgerPayload) {
 
         const objectiveInputs = new Map<
             string,
-            { taskId: string; title?: string; description?: string }
+            { taskId: string; parentTaskId?: string; title?: string; description?: string }
         >();
 
         for (const event of payload.events) {
@@ -38,6 +38,7 @@ export async function saveReforgerEvents(payload: ReforgerPayload) {
 
             const objective = objectiveInputs.get(event.taskId) ?? { taskId: event.taskId };
 
+            if (event.parentTaskId !== undefined) objective.parentTaskId = event.parentTaskId;
             if (event.taskTitle !== undefined) objective.title = event.taskTitle;
             if (event.taskDescription !== undefined) objective.description = event.taskDescription;
 
@@ -54,12 +55,14 @@ export async function saveReforgerEvents(payload: ReforgerPayload) {
                         },
                     },
                     update: {
+                        ...(objective.parentTaskId !== undefined ? { parentTaskId: objective.parentTaskId } : {}),
                         ...(objective.title !== undefined ? { title: objective.title } : {}),
                         ...(objective.description !== undefined ? { description: objective.description } : {}),
                     },
                     create: {
                         sessionDbId: session.id,
                         taskId: objective.taskId,
+                        parentTaskId: objective.parentTaskId ?? null,
                         title: objective.title ?? null,
                         description: objective.description ?? null,
                     },
@@ -80,6 +83,8 @@ export async function saveReforgerEvents(payload: ReforgerPayload) {
                 oldStateName: event.oldStateName ?? null,
                 newState: event.newState ?? null,
                 newStateName: event.newStateName ?? null,
+                oldProgress: event.oldProgress ?? null,
+                newProgress: event.newProgress ?? null,
                 eventTimestamp: new Date(event.timestamp * 1000),
                 rawJson: event,
             })),

@@ -686,6 +686,7 @@ export const ReforgerObjectiveScalarFieldEnum = {
   id: 'id',
   sessionDbId: 'sessionDbId',
   taskId: 'taskId',
+  parentTaskId: 'parentTaskId',
   title: 'title',
   description: 'description',
   createdAt: 'createdAt',
@@ -706,6 +707,8 @@ export const ReforgerEventScalarFieldEnum = {
   oldStateName: 'oldStateName',
   newState: 'newState',
   newStateName: 'newStateName',
+  oldProgress: 'oldProgress',
+  newProgress: 'newProgress',
   eventTimestamp: 'eventTimestamp',
   rawJson: 'rawJson',
   createdAt: 'createdAt'
@@ -803,20 +806,6 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -827,6 +816,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**

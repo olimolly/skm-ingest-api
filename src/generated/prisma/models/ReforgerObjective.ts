@@ -28,6 +28,7 @@ export type ReforgerObjectiveMinAggregateOutputType = {
   id: string | null
   sessionDbId: string | null
   taskId: string | null
+  parentTaskId: string | null
   title: string | null
   description: string | null
   createdAt: Date | null
@@ -38,6 +39,7 @@ export type ReforgerObjectiveMaxAggregateOutputType = {
   id: string | null
   sessionDbId: string | null
   taskId: string | null
+  parentTaskId: string | null
   title: string | null
   description: string | null
   createdAt: Date | null
@@ -48,6 +50,7 @@ export type ReforgerObjectiveCountAggregateOutputType = {
   id: number
   sessionDbId: number
   taskId: number
+  parentTaskId: number
   title: number
   description: number
   createdAt: number
@@ -60,6 +63,7 @@ export type ReforgerObjectiveMinAggregateInputType = {
   id?: true
   sessionDbId?: true
   taskId?: true
+  parentTaskId?: true
   title?: true
   description?: true
   createdAt?: true
@@ -70,6 +74,7 @@ export type ReforgerObjectiveMaxAggregateInputType = {
   id?: true
   sessionDbId?: true
   taskId?: true
+  parentTaskId?: true
   title?: true
   description?: true
   createdAt?: true
@@ -80,6 +85,7 @@ export type ReforgerObjectiveCountAggregateInputType = {
   id?: true
   sessionDbId?: true
   taskId?: true
+  parentTaskId?: true
   title?: true
   description?: true
   createdAt?: true
@@ -163,6 +169,7 @@ export type ReforgerObjectiveGroupByOutputType = {
   id: string
   sessionDbId: string
   taskId: string
+  parentTaskId: string | null
   title: string | null
   description: string | null
   createdAt: Date
@@ -194,6 +201,7 @@ export type ReforgerObjectiveWhereInput = {
   id?: Prisma.StringFilter<"ReforgerObjective"> | string
   sessionDbId?: Prisma.StringFilter<"ReforgerObjective"> | string
   taskId?: Prisma.StringFilter<"ReforgerObjective"> | string
+  parentTaskId?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   title?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   description?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ReforgerObjective"> | Date | string
@@ -206,6 +214,7 @@ export type ReforgerObjectiveOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   sessionDbId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  parentTaskId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -222,6 +231,7 @@ export type ReforgerObjectiveWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ReforgerObjectiveWhereInput | Prisma.ReforgerObjectiveWhereInput[]
   sessionDbId?: Prisma.StringFilter<"ReforgerObjective"> | string
   taskId?: Prisma.StringFilter<"ReforgerObjective"> | string
+  parentTaskId?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   title?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   description?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ReforgerObjective"> | Date | string
@@ -234,6 +244,7 @@ export type ReforgerObjectiveOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   sessionDbId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  parentTaskId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -250,6 +261,7 @@ export type ReforgerObjectiveScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"ReforgerObjective"> | string
   sessionDbId?: Prisma.StringWithAggregatesFilter<"ReforgerObjective"> | string
   taskId?: Prisma.StringWithAggregatesFilter<"ReforgerObjective"> | string
+  parentTaskId?: Prisma.StringNullableWithAggregatesFilter<"ReforgerObjective"> | string | null
   title?: Prisma.StringNullableWithAggregatesFilter<"ReforgerObjective"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"ReforgerObjective"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ReforgerObjective"> | Date | string
@@ -259,6 +271,7 @@ export type ReforgerObjectiveScalarWhereWithAggregatesInput = {
 export type ReforgerObjectiveCreateInput = {
   id?: string
   taskId: string
+  parentTaskId?: string | null
   title?: string | null
   description?: string | null
   createdAt?: Date | string
@@ -271,6 +284,7 @@ export type ReforgerObjectiveUncheckedCreateInput = {
   id?: string
   sessionDbId: string
   taskId: string
+  parentTaskId?: string | null
   title?: string | null
   description?: string | null
   createdAt?: Date | string
@@ -281,6 +295,7 @@ export type ReforgerObjectiveUncheckedCreateInput = {
 export type ReforgerObjectiveUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -293,6 +308,7 @@ export type ReforgerObjectiveUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionDbId?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -304,6 +320,7 @@ export type ReforgerObjectiveCreateManyInput = {
   id?: string
   sessionDbId: string
   taskId: string
+  parentTaskId?: string | null
   title?: string | null
   description?: string | null
   createdAt?: Date | string
@@ -313,6 +330,7 @@ export type ReforgerObjectiveCreateManyInput = {
 export type ReforgerObjectiveUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -323,6 +341,7 @@ export type ReforgerObjectiveUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionDbId?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -348,6 +367,7 @@ export type ReforgerObjectiveCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionDbId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  parentTaskId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -358,6 +378,7 @@ export type ReforgerObjectiveMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionDbId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  parentTaskId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -368,6 +389,7 @@ export type ReforgerObjectiveMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   sessionDbId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  parentTaskId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -440,6 +462,7 @@ export type ReforgerObjectiveUpdateOneWithoutEventsNestedInput = {
 export type ReforgerObjectiveCreateWithoutSessionInput = {
   id?: string
   taskId: string
+  parentTaskId?: string | null
   title?: string | null
   description?: string | null
   createdAt?: Date | string
@@ -450,6 +473,7 @@ export type ReforgerObjectiveCreateWithoutSessionInput = {
 export type ReforgerObjectiveUncheckedCreateWithoutSessionInput = {
   id?: string
   taskId: string
+  parentTaskId?: string | null
   title?: string | null
   description?: string | null
   createdAt?: Date | string
@@ -490,6 +514,7 @@ export type ReforgerObjectiveScalarWhereInput = {
   id?: Prisma.StringFilter<"ReforgerObjective"> | string
   sessionDbId?: Prisma.StringFilter<"ReforgerObjective"> | string
   taskId?: Prisma.StringFilter<"ReforgerObjective"> | string
+  parentTaskId?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   title?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   description?: Prisma.StringNullableFilter<"ReforgerObjective"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ReforgerObjective"> | Date | string
@@ -499,6 +524,7 @@ export type ReforgerObjectiveScalarWhereInput = {
 export type ReforgerObjectiveCreateWithoutEventsInput = {
   id?: string
   taskId: string
+  parentTaskId?: string | null
   title?: string | null
   description?: string | null
   createdAt?: Date | string
@@ -510,6 +536,7 @@ export type ReforgerObjectiveUncheckedCreateWithoutEventsInput = {
   id?: string
   sessionDbId: string
   taskId: string
+  parentTaskId?: string | null
   title?: string | null
   description?: string | null
   createdAt?: Date | string
@@ -535,6 +562,7 @@ export type ReforgerObjectiveUpdateToOneWithWhereWithoutEventsInput = {
 export type ReforgerObjectiveUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -546,6 +574,7 @@ export type ReforgerObjectiveUncheckedUpdateWithoutEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   sessionDbId?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -555,6 +584,7 @@ export type ReforgerObjectiveUncheckedUpdateWithoutEventsInput = {
 export type ReforgerObjectiveCreateManySessionInput = {
   id?: string
   taskId: string
+  parentTaskId?: string | null
   title?: string | null
   description?: string | null
   createdAt?: Date | string
@@ -564,6 +594,7 @@ export type ReforgerObjectiveCreateManySessionInput = {
 export type ReforgerObjectiveUpdateWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -574,6 +605,7 @@ export type ReforgerObjectiveUpdateWithoutSessionInput = {
 export type ReforgerObjectiveUncheckedUpdateWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -584,6 +616,7 @@ export type ReforgerObjectiveUncheckedUpdateWithoutSessionInput = {
 export type ReforgerObjectiveUncheckedUpdateManyWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   taskId?: Prisma.StringFieldUpdateOperationsInput | string
+  parentTaskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -625,6 +658,7 @@ export type ReforgerObjectiveSelect<ExtArgs extends runtime.Types.Extensions.Int
   id?: boolean
   sessionDbId?: boolean
   taskId?: boolean
+  parentTaskId?: boolean
   title?: boolean
   description?: boolean
   createdAt?: boolean
@@ -638,6 +672,7 @@ export type ReforgerObjectiveSelectCreateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   sessionDbId?: boolean
   taskId?: boolean
+  parentTaskId?: boolean
   title?: boolean
   description?: boolean
   createdAt?: boolean
@@ -649,6 +684,7 @@ export type ReforgerObjectiveSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   id?: boolean
   sessionDbId?: boolean
   taskId?: boolean
+  parentTaskId?: boolean
   title?: boolean
   description?: boolean
   createdAt?: boolean
@@ -660,13 +696,14 @@ export type ReforgerObjectiveSelectScalar = {
   id?: boolean
   sessionDbId?: boolean
   taskId?: boolean
+  parentTaskId?: boolean
   title?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReforgerObjectiveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionDbId" | "taskId" | "title" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["reforgerObjective"]>
+export type ReforgerObjectiveOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionDbId" | "taskId" | "parentTaskId" | "title" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["reforgerObjective"]>
 export type ReforgerObjectiveInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.ReforgerSessionDefaultArgs<ExtArgs>
   events?: boolean | Prisma.ReforgerObjective$eventsArgs<ExtArgs>
@@ -689,6 +726,7 @@ export type $ReforgerObjectivePayload<ExtArgs extends runtime.Types.Extensions.I
     id: string
     sessionDbId: string
     taskId: string
+    parentTaskId: string | null
     title: string | null
     description: string | null
     createdAt: Date
@@ -1121,6 +1159,7 @@ export interface ReforgerObjectiveFieldRefs {
   readonly id: Prisma.FieldRef<"ReforgerObjective", 'String'>
   readonly sessionDbId: Prisma.FieldRef<"ReforgerObjective", 'String'>
   readonly taskId: Prisma.FieldRef<"ReforgerObjective", 'String'>
+  readonly parentTaskId: Prisma.FieldRef<"ReforgerObjective", 'String'>
   readonly title: Prisma.FieldRef<"ReforgerObjective", 'String'>
   readonly description: Prisma.FieldRef<"ReforgerObjective", 'String'>
   readonly createdAt: Prisma.FieldRef<"ReforgerObjective", 'DateTime'>
