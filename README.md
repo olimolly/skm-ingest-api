@@ -1,6 +1,18 @@
 # skm-ingest-api
 SKM Ingest API is a lightweight Fastify-based backend service designed to receive, validate, and store live telemetry and mission events from Arma Reforger servers.  The service acts as a secure ingestion layer between Reforger gameplay sessions and external analytics or administration systems.
 
+## Authentification de l'ingestion Reforger
+
+`POST /reforger/events` s'authentifie avec l'en-tête HTTP
+`X-Api-Key: <REFORGER_API_KEY>`. La clé ne doit plus être placée dans le corps
+JSON. `REFORGER_INGEST_API_KEY` et le champ JSON `apiKey` restent temporairement
+acceptés comme fallbacks de migration afin de pouvoir déployer le backend avant
+le nouveau client Reforger ; ils devront être supprimés une fois tous les
+serveurs migrés.
+
+Cette modification ne concerne pas les routes `/internal/*`, qui continuent
+d'utiliser `Authorization: Bearer <INTERNAL_API_KEY>`.
+
 ## Progression des objectifs Reforger
 
 Les événements associés à un objectif peuvent inclure `oldProgress` et
@@ -50,6 +62,9 @@ correspondante de l'API :
 ```bash
 npx prisma migrate deploy
 ```
+
+Le contrat concis destiné à l'émetteur est disponible dans
+[`examples/skm-stats-contract.md`](examples/skm-stats-contract.md).
 
 ## Fonctionnement et sécurité du rate limiting
 

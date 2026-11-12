@@ -5,6 +5,7 @@ import { getClientIp } from "../config/clientIp.js";
 export default async function reforgerRoutes(app) {
     app.post("/reforger/events", async (request, reply) => {
         const clientIp = getClientIp(request);
+        const rawHeaderApiKey = request.headers["x-api-key"];
         const result = ReforgerPayloadSchema.safeParse(request.body);
         if (!result.success) {
             request.log.warn({
@@ -14,13 +15,25 @@ export default async function reforgerRoutes(app) {
             return reply.status(400).send({ error: "Invalid payload" });
         }
         const payload = result.data;
-        if (payload.apiKey !== process.env.REFORGER_INGEST_API_KEY) {
+        const hasHeaderApiKey = rawHeaderApiKey !== undefined;
+        const headerApiKey = typeof rawHeaderApiKey === "string" ? rawHeaderApiKey : undefined;
+        const providedApiKey = hasHeaderApiKey ? headerApiKey : payload.apiKey;
+        const configuredApiKey = process.env.REFORGER_API_KEY
+            ?? process.env.REFORGER_INGEST_API_KEY;
+        if (!configuredApiKey || !providedApiKey || providedApiKey !== configuredApiKey) {
             request.log.warn({
                 serverId: payload.serverId,
                 sessionId: payload.sessionId,
                 ip: clientIp,
-            }, "Rejected Reforger payload: invalid apiKey");
+            }, "Rejected Reforger payload: missing or invalid X-Api-Key");
             return reply.status(401).send({ error: "Unauthorized" });
+        }
+        if (!hasHeaderApiKey && payload.apiKey) {
+            request.log.warn({
+                serverId: payload.serverId,
+                sessionId: payload.sessionId,
+                ip: clientIp,
+            }, "Accepted deprecated Reforger body apiKey; migrate client to X-Api-Key");
         }
         if (!isAllowedReforgerServerId(payload.serverId)) {
             request.log.warn({

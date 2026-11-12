@@ -5,7 +5,6 @@ import { ReforgerPayloadSchema } from "../src/schemas/reforger.js";
 
 test("Reforger payload accepts objective metadata and progress", () => {
     const result = ReforgerPayloadSchema.safeParse({
-        apiKey: "test-key",
         serverId: "server-1",
         sessionId: "session-1",
         missionId: "mission-1",
@@ -29,7 +28,6 @@ test("Reforger payload accepts objective metadata and progress", () => {
 
 test("Reforger payload rejects objective progress outside 0..100", () => {
     const result = ReforgerPayloadSchema.safeParse({
-        apiKey: "test-key",
         serverId: "server-1",
         sessionId: "session-1",
         missionId: "mission-1",
@@ -50,7 +48,6 @@ test("Reforger payload rejects objective progress outside 0..100", () => {
 
 test("Reforger payload rejects objective progress without taskId", () => {
     const result = ReforgerPayloadSchema.safeParse({
-        apiKey: "test-key",
         serverId: "server-1",
         sessionId: "session-1",
         missionId: "mission-1",
@@ -65,4 +62,16 @@ test("Reforger payload rejects objective progress without taskId", () => {
     });
 
     assert.equal(result.success, false);
+});
+
+test("Reforger payload temporarily accepts the deprecated body apiKey", () => {
+    const result = ReforgerPayloadSchema.safeParse({
+        apiKey: "legacy-test-key",
+        serverId: "server-1",
+        sessionId: "session-1",
+        missionId: "mission-1",
+        events: [],
+    });
+
+    assert.equal(result.success, true);
 });

@@ -34,7 +34,9 @@ export const ReforgerEventSchema = z.object({
 });
 
 export const ReforgerPayloadSchema = z.object({
-    apiKey: z.string(),
+    // Transitional fallback for clients deployed before X-Api-Key support.
+    // New clients must authenticate with the HTTP header.
+    apiKey: z.string().optional(),
 
     serverId: z.string(),
 

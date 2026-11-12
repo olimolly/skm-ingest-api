@@ -1,5 +1,4 @@
 {
-  "apiKey": "replace-with-your-reforger-api-key",
   "serverId": "local-reforger",
   "sessionId": "session-example-20261108-001",
   "missionId": "olives_and_dates",
@@ -84,6 +83,11 @@
       "oldProgress": 0,
       "newProgress": 65,
       "timestamp": 1794132710
+    },
+    {
+      "eventId": "session-example-20261108-001_000009",
+      "type": "SESSION_ENDED",
+      "timestamp": 1794133000
     }
   ]
 }

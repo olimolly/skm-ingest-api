@@ -67,6 +67,7 @@ export const ReforgerObjectiveScalarFieldEnum = {
     id: 'id',
     sessionDbId: 'sessionDbId',
     taskId: 'taskId',
+    parentTaskId: 'parentTaskId',
     title: 'title',
     description: 'description',
     createdAt: 'createdAt',
@@ -83,6 +84,8 @@ export const ReforgerEventScalarFieldEnum = {
     oldStateName: 'oldStateName',
     newState: 'newState',
     newStateName: 'newStateName',
+    oldProgress: 'oldProgress',
+    newProgress: 'newProgress',
     eventTimestamp: 'eventTimestamp',
     rawJson: 'rawJson',
     createdAt: 'createdAt'

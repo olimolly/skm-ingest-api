@@ -53,17 +53,17 @@ test("GET /health is explicitly exempt from rate limiting", async (t) => {
 });
 
 test("POST /reforger/events uses the trusted Render client IP for the whitelist", async (t) => {
-    const previousApiKey = process.env.REFORGER_INGEST_API_KEY;
+    const previousApiKey = process.env.REFORGER_API_KEY;
     const previousServerIds = process.env.ALLOWED_REFORGER_SERVER_IDS;
     const previousIps = process.env.ALLOWED_REFORGER_IPS;
 
-    process.env.REFORGER_INGEST_API_KEY = "reforger-test-secret";
+    process.env.REFORGER_API_KEY = "reforger-test-secret";
     process.env.ALLOWED_REFORGER_SERVER_IDS = "test-server";
     process.env.ALLOWED_REFORGER_IPS = "198.51.100.25";
 
     t.after(() => {
-        if (previousApiKey === undefined) delete process.env.REFORGER_INGEST_API_KEY;
-        else process.env.REFORGER_INGEST_API_KEY = previousApiKey;
+        if (previousApiKey === undefined) delete process.env.REFORGER_API_KEY;
+        else process.env.REFORGER_API_KEY = previousApiKey;
 
         if (previousServerIds === undefined) delete process.env.ALLOWED_REFORGER_SERVER_IDS;
         else process.env.ALLOWED_REFORGER_SERVER_IDS = previousServerIds;
@@ -79,12 +79,12 @@ test("POST /reforger/events uses the trusted Render client IP for the whitelist"
         method: "POST",
         url: "/reforger/events",
         headers: {
+            "x-api-key": "reforger-test-secret",
             "cf-connecting-ip": "203.0.113.10",
             // The allow-listed spoofed value must not be used by the whitelist.
             "x-forwarded-for": "198.51.100.25",
         },
         payload: {
-            apiKey: "reforger-test-secret",
             serverId: "test-server",
             sessionId: "rate-limit-test-session",
             missionId: "rate-limit-test-mission",

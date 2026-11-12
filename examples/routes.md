@@ -10,7 +10,8 @@ Variables d'environnement utilisées par l'API :
 | Variable | Description |
 | --- | --- |
 | `DATABASE_URL` | Connexion PostgreSQL utilisée par Prisma. |
-| `REFORGER_INGEST_API_KEY` | Clé requise dans les payloads d'ingestion. |
+| `REFORGER_API_KEY` | Clé requise dans l'en-tête `X-Api-Key` des requêtes d'ingestion. |
+| `REFORGER_INGEST_API_KEY` | Ancien nom temporairement accepté si `REFORGER_API_KEY` est absent. À supprimer après migration des déploiements. |
 | `INTERNAL_API_KEY` | Bearer token protégeant les routes internes. |
 | `ALLOWED_REFORGER_SERVER_IDS` | Liste CSV facultative des serveurs autorisés. Une valeur vide autorise tous les serveurs. |
 | `ALLOWED_REFORGER_IPS` | Liste CSV facultative des adresses IP autorisées. Une valeur vide autorise toutes les IP. |
@@ -44,13 +45,25 @@ En-tête :
 
 ```http
 Content-Type: application/json
+X-Api-Key: <REFORGER_API_KEY>
 ```
+
+Avec Enfusion, le client peut le construire ainsi :
+
+```c
+RestContext ctx = GetGame().GetRestApi().GetContext(endpoint);
+ctx.SetHeaders("Content-Type,application/json,X-Api-Key," + apiKey);
+```
+
+La réception réelle de cet en-tête doit être validée sur un serveur Reforger
+dédié. L'API accepte encore temporairement l'ancien champ JSON `apiKey` lorsque
+`X-Api-Key` est absent, uniquement pour permettre de déployer le backend avant
+le nouveau client. Le header, s'il est présent, reste prioritaire.
 
 Exemple de payload :
 
 ```json
 {
-  "apiKey": "replace-with-your-reforger-api-key",
   "serverId": "local-reforger",
   "sessionId": "session-example-20261108-001",
   "missionId": "olives_and_dates",
@@ -135,6 +148,11 @@ Exemple de payload :
       "oldProgress": 0,
       "newProgress": 65,
       "timestamp": 1794132710
+    },
+    {
+      "eventId": "session-example-20261108-001_000009",
+      "type": "SESSION_ENDED",
+      "timestamp": 1794133000
     }
   ]
 }
@@ -158,6 +176,22 @@ Champs d'un événement :
 | `oldProgress` | nombre | non | Progression précédente, comprise entre 0 et 100. |
 | `newProgress` | nombre | non | Nouvelle progression, comprise entre 0 et 100. |
 
+Types d'événements produits par SKM Stats :
+
+| Type | Description |
+| --- | --- |
+| `SESSION_STARTED` | Démarrage de la session. |
+| `SESSION_ENDED` | Fin de la session. |
+| `OBJECTIVE_STATE_CHANGED` | Création ou changement d'état d'un objectif. |
+| `OBJECTIVE_PROGRESS_CHANGED` | Changement de sa progression numérique. |
+
+États canoniques : `CREATED`, `ASSIGNED`, `PROGRESSED`, `COMPLETED`, `FAILED`
+et `CANCELLED`.
+
+L'API accepte actuellement une chaîne libre dans `type` pour préserver la
+compatibilité future. Cette tolérance ne dispense pas SKM Stats de respecter la
+liste ci-dessus ; tout nouveau type doit d'abord faire évoluer le contrat.
+
 `oldProgress` et `newProgress` acceptent des valeurs décimales. Ils doivent
 être associés à un `taskId`. Une progression supérieure à `0` correspond
 normalement à l'état `PROGRESSED`, puis une progression à `100` à l'état
@@ -175,8 +209,8 @@ Réponse `200` :
 ```json
 {
   "ok": true,
-  "received": 8,
-  "inserted": 8
+  "received": 9,
+  "inserted": 9
 }
 ```
 
@@ -189,7 +223,7 @@ Erreurs possibles :
 | Statut | Cause |
 | --- | --- |
 | `400` | Payload invalide ou lot supérieur à 100 événements. |
-| `401` | `apiKey` incorrecte. |
+| `401` | En-tête `X-Api-Key` absent ou incorrect. |
 | `403` | `serverId` ou adresse IP non autorisé. |
 | `429` | Limite de requêtes dépassée. |
 
@@ -241,7 +275,7 @@ Réponse `200` :
       "createdAt": "2026-11-08T10:00:00.000Z",
       "updatedAt": "2026-11-08T10:00:00.000Z",
       "_count": {
-        "events": 8
+        "events": 9
       }
     }
   ],
@@ -339,15 +373,19 @@ Les objectifs sont triés par `taskId`. Les événements sont triés par
 
 Après application de la migration :
 
-1. utiliser des `sessionId` et `eventId` uniques ;
-2. ingérer un parent et au moins deux enfants partageant son `taskId` comme
+1. envoyer la clé exclusivement avec `X-Api-Key` et vérifier les cas absent,
+   invalide et valide ;
+2. utiliser des `sessionId` et `eventId` uniques ;
+3. ingérer un parent et au moins deux enfants partageant son `taskId` comme
    `parentTaskId` ;
-3. vérifier les valeurs décimales et les limites `0` et `100` ;
-4. vérifier qu'une progression sans `taskId`, inférieure à `0` ou supérieure à
+4. vérifier les valeurs décimales et les limites `0` et `100` ;
+5. vérifier qu'une progression sans `taskId`, inférieure à `0` ou supérieure à
    `100` retourne `400` ;
-5. relire la session par la route interne et vérifier la hiérarchie ainsi que
+6. relire la session par la route interne et vérifier la hiérarchie ainsi que
    `oldProgress` et `newProgress` ;
-6. renvoyer le même `eventId` et vérifier que `inserted` vaut `0`.
+7. renvoyer le même `eventId` et vérifier que `inserted` vaut `0` ;
+8. vérifier `429`, `5xx` et timeout sans perte ni double comptage ;
+9. vérifier sur serveur dédié que `SetHeaders()` produit bien `X-Api-Key`.
 
 Erreurs possibles :
 
